@@ -37,6 +37,18 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "✅ Website is up"
-          to: your@email.com
+          to: jefferytechie@email.com
           from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
           body: "The Internet Herokuapp is accessible and passed the test successfully."
+      - name: Send email on failure
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "❌ Website failed test"
+          to: jefferytechie@email.com
+          body: "The test to open the Internet Herokuapp website failed."
+
