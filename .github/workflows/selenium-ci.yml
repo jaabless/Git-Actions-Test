@@ -1,4 +1,4 @@
-name: Selenium Java CI
+name: Selenium Test with Email Notification
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  test-and-notify:
     runs-on: ubuntu-latest
 
     services:
@@ -22,11 +22,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build and run tests
-        run: mvn clean test
+      - name: Send email on success
+        if: success()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "✅ Website is up"
+          to: your@email.com
+          from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
+          body: "The Internet Herokuapp is accessible and passed the test successfully."

@@ -19,15 +19,13 @@ public class GoogleTest {
     private WebDriver driver;
 
     @Before
-    public void setUp() throws Exception {
-//        ChromeOptions options = new ChromeOptions();
-//        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+    public void setUp(){
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
         driver = new ChromeDriver();
     }
 
     @Test
-    public void testGoogleSearch() {
+    public void testInternetSite() {
         driver.get("https://the-internet.herokuapp.com/");
         assertTrue(driver.getTitle().contains("Internet"));
 //        driver.findElement(By.name("q")).sendKeys("GitHub Actions\n");
